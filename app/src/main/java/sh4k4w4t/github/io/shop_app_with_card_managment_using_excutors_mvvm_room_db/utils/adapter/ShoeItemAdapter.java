@@ -20,33 +20,45 @@ public class ShoeItemAdapter extends RecyclerView.Adapter<ShoeItemAdapter.holder
     private List<ShoeItem> shoeItemList;
     Context context;
 
-    public void setShoeItemList(Context context,List<ShoeItem> shoeItemList) {
+    private ShoeClickedListeners shoeClickedListeners;
+
+    public ShoeItemAdapter(ShoeClickedListeners shoeClickedListeners) {
+        this.shoeClickedListeners = shoeClickedListeners;
+    }
+
+    public void setShoeItemList(Context context, List<ShoeItem> shoeItemList) {
         this.shoeItemList = shoeItemList;
-        this.context= context;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public ShoeItemAdapter.holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.each_shoe,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.each_shoe, parent, false);
         return new holder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShoeItemAdapter.holder holder, int position) {
-        ShoeItem shoeItem= shoeItemList.get(position);
+        ShoeItem shoeItem = shoeItemList.get(position);
         holder.binding.eachShoeName.setText(shoeItem.getShoeName());
         holder.binding.eachShoeBrandNameTv.setText(shoeItem.getShoeBrand());
         Glide.with(context)
                 .load(shoeItem.getShoeImage())
                 .centerCrop()
                 .into(holder.binding.eachShoeIv);
+        holder.binding.eachShoeCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shoeClickedListeners.onCardClicked(shoeItem);
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        if (shoeItemList==null){
+        if (shoeItemList == null) {
             return 0;
         }
         return shoeItemList.size();
@@ -54,9 +66,14 @@ public class ShoeItemAdapter extends RecyclerView.Adapter<ShoeItemAdapter.holder
 
     public class holder extends RecyclerView.ViewHolder {
         EachShoeBinding binding;
+
         public holder(@NonNull View itemView) {
             super(itemView);
-            binding= EachShoeBinding.bind(itemView);
+            binding = EachShoeBinding.bind(itemView);
         }
+    }
+
+    public interface ShoeClickedListeners {
+        void onCardClicked(ShoeItem shoeItem);
     }
 }

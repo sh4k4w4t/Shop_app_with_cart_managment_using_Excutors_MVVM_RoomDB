@@ -13,6 +13,13 @@
         android:theme="@style/Theme.Shop_app_with_card_managment_using_excutors_mvvm_room_db"
         tools:targetApi="31">
         <activity
+            android:name=".views.DetailsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

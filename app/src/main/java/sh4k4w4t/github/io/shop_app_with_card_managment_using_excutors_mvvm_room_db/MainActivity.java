@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.PrimaryKey;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 
@@ -13,8 +14,9 @@ import java.util.List;
 
 import sh4k4w4t.github.io.shop_app_with_card_managment_using_excutors_mvvm_room_db.utils.adapter.ShoeItemAdapter;
 import sh4k4w4t.github.io.shop_app_with_card_managment_using_excutors_mvvm_room_db.utils.model.ShoeItem;
+import sh4k4w4t.github.io.shop_app_with_card_managment_using_excutors_mvvm_room_db.views.DetailsActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ShoeItemAdapter.ShoeClickedListeners {
     private RecyclerView recyclerView;
     private List<ShoeItem> shoeItemList;
     private ShoeItemAdapter adapter;
@@ -47,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.mainRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        adapter = new ShoeItemAdapter();
+        adapter = new ShoeItemAdapter(this);
+    }
+
+    @Override
+    public void onCardClicked(ShoeItem shoeItem) {
+        Intent intent= new Intent(MainActivity.this, DetailsActivity.class);
+        intent.putExtra("showItem",shoeItem);
+        startActivity(intent);
     }
 }
