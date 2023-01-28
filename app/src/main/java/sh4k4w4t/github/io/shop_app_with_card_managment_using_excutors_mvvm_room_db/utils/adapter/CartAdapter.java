@@ -37,7 +37,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.holder> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.holder holder, int position) {
-        ShoeCart shoeCart= shoeCartList.get(position);
+        ShoeCart shoeCart = shoeCartList.get(position);
         holder.binding.eachCartItemIV.setImageResource(shoeCart.getShoeImage());
         holder.binding.eachCartItemName.setText(shoeCart.getShoeName());
         holder.binding.eachCartItemBrandNameTv.setText(shoeCart.getShoeBrand());
@@ -66,9 +66,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.holder> {
         }
     }
 
-    public interface CartClickedListeners{
+    public interface CartClickedListeners {
         void onDeleteClicked(ShoeCart shoeCart);
+
         void onPlusClicked(ShoeCart shoeCart);
+
         void onMinusClicked(ShoeCart shoeCart);
     }
 }
