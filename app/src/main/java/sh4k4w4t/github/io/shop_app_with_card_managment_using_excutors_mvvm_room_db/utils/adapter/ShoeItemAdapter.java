@@ -43,16 +43,13 @@ public class ShoeItemAdapter extends RecyclerView.Adapter<ShoeItemAdapter.holder
         ShoeItem shoeItem = shoeItemList.get(position);
         holder.binding.eachShoeName.setText(shoeItem.getShoeName());
         holder.binding.eachShoeBrandNameTv.setText(shoeItem.getShoeBrand());
+        holder.binding.eachShoePriceTv.setText(String.valueOf(shoeItem.getShoePrice()));
         Glide.with(context)
                 .load(shoeItem.getShoeImage())
                 .centerCrop()
                 .into(holder.binding.eachShoeIv);
-        holder.binding.eachShoeCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shoeClickedListeners.onCardClicked(shoeItem);
-            }
-        });
+        holder.binding.eachShoeCardView.setOnClickListener(v -> shoeClickedListeners.onCardClicked(shoeItem));
+        holder.binding.eachShoeAddToCartBtn.setOnClickListener(v -> shoeClickedListeners.onAddToCartBtnClicked(shoeItem));
 
     }
 
@@ -75,5 +72,6 @@ public class ShoeItemAdapter extends RecyclerView.Adapter<ShoeItemAdapter.holder
 
     public interface ShoeClickedListeners {
         void onCardClicked(ShoeItem shoeItem);
+        void onAddToCartBtnClicked(ShoeItem shoeItem);
     }
 }
